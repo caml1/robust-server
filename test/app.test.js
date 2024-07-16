@@ -25,7 +25,7 @@ describe("App", () => {
 
   describe("path /urls", () => {
     describe("post method", () => {
-      test("creates a new short url and assigns id", async () => {
+      test.only("creates a new short url and assigns id", async () => {
         const expectedHref = "http://www.contradiction.com";
 
         const response = await request(app)
@@ -34,6 +34,7 @@ describe("App", () => {
           .send({ data: { href: expectedHref } });
 
         expect(response.status).toBe(201);
+        console.log(response.body.data)
         expect(response.body.data.href).toEqual(expectedHref);
         expect(response.body.data.id).toBeGreaterThanOrEqual(1);
       });
