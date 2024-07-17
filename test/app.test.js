@@ -25,7 +25,7 @@ describe("App", () => {
 
   describe("path /urls", () => {
     describe("post method", () => {
-      test.only("creates a new short url and assigns id", async () => {
+      test("creates a new short url and assigns id", async () => {
         const expectedHref = "http://www.contradiction.com";
 
         const response = await request(app)
