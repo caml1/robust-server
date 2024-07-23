@@ -67,18 +67,48 @@ app.put('/urls/:urlId', (req, res) => {
     url.href = data.href;
   
     res.status(200).json({ data: url });
-  });
+});
+
+app.post("/urls/:urlId", (req, res, next) => {
+  
+  return res.status(405).json({ error: `POST` });
+  
+});
+  
+app.delete("/urls/:urlId", (req, res, next) => {
+    
+  return res.status(405).json({ error: `DELETE` });
+      
+});
 
 app.get('/urls', (req, res) => {
     res.json({ data: urls });
 })
 
+// working on this:
 app.get('/urls/:urlId/uses', (req, res) => {
     const { urlId } = req.params;
     const foundUse = uses.find(use => use.urlId === Number(urlId));
 
-    res.json({ data: [foundUse] });
+    if (foundUse) {
+      res.json({ data: [foundUse] });
+  } else {
+      return res.status(404).json({ error: `URL with ID ${urlId} not found` });
+  }
 })
+app.put('/urls/:urlId/uses', (req, res, next) => {
+  
+  return res.status(405).json({ error: `PUT` });
+});
+app.post('/urls/:urlId/uses', (req, res, next) => {
+  
+  return res.status(405).json({ error: `POST` });
+});
+  
+app.delete('/urls/:urlId/uses', (req, res, next) => {
+    
+  return res.status(405).json({ error: `DELETE` });   
+});
 
 app.get('urls/:urlId/uses/:useId', (req, res) => {
     const { useId } = req.params;
