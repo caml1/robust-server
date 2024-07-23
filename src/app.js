@@ -23,14 +23,31 @@ app.post("/urls", (req, res, next) => {
     urls.push(newUrl);
     res.status(201).json({ data: newUrl });
 });
+
+app.put("/urls", (req, res, next) => {
+  
+return res.status(405).json({ error: `PUT` });
+
+});
+
+app.delete("/urls", (req, res, next) => {
+  
+  return res.status(405).json({ error: `DELETE` });
+    
+});
   
 
 app.get('/urls/:urlId', (req, res) => {
-    const { urlId } = req.params;
-    const foundUrl = urls.find(url => url.id === Number(urlId));
+  const { urlId } = req.params;
+  const foundUrl = urls.find(url => url.id === Number(urlId));
 
-    res.json({ data: foundUrl })
-})
+  if (foundUrl) {
+      foundUrl.time = Date.now();
+      res.json({ data: foundUrl });
+  } else {
+      return res.status(404).json({ error: `URL with ID ${urlId} not found` });
+  }
+});
 
 app.put('/urls/:urlId', (req, res) => {
     const urlId = parseInt(req.params.urlId, 10);
