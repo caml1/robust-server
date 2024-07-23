@@ -43,10 +43,16 @@ app.get('/urls/:urlId', (req, res) => {
   const foundUrl = urls.find(url => url.id === Number(urlId));
 
   if (foundUrl) {
-      foundUrl.time = Date.now();
-      res.json({ data: foundUrl });
+    const useRecord = {
+      id: uses.length + 1, // Or use another logic to generate unique IDs
+      urlId: Number(urlId),
+      time: Date.now(),
+    };
+    uses.push(useRecord);
+    
+    res.json({ data: foundUrl });
   } else {
-      return res.status(404).json({ error: `URL with ID ${urlId} not found` });
+    return res.status(404).json({ error: `URL with ID ${urlId} not found` });
   }
 });
 app.put('/urls/:urlId', (req, res) => {
