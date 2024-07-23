@@ -5,20 +5,19 @@ const uses = require("./data/uses-data")
 
 app.use(express.json());
 
-let lastUrlId = urls.reduce((maxId, url) => (Math.max(maxId, url), 0));
+let lastUrlId = urls.reduce((maxId, url) => Math.max(maxId, url.id), 0);
 
 // /urls
 app.post("/urls", (req, res, next) => {
     const { data } = req.body;
     if (!data || !data.href) {
-      
-      return res.status(400).json({ error: "The 'href' property is required." });
+        return res.status(400).json({ error: "The 'href' property is required." });
     }
     
     const { href } = data;
     const newUrl = {
-      id: ++lastUrlId,
-      href,
+        id: ++lastUrlId,
+        href,
     };
     
     urls.push(newUrl);
